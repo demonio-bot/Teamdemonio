@@ -102,7 +102,7 @@ async function starts() {
 	const demonio = new WAConnection()
 	demonio.logger.level = 'warn'
 	console.log('>', '[',color('INGFO','blue'),']','Menglogin kawan...')
-	pato.on('qr', () => {
+	demonio.on('qr', () => {
 	console.log(color('[','white'), color('!','red'), color(']','white'), color(' Scan the qr code above'))
 	})
 
