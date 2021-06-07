@@ -152,7 +152,7 @@ demonio.on('CB:action,,call', async json => {
 		}
 })
 	// Chat Update
-pato.on('chat-update', async (mek) => {
+demonio.on('chat-update', async (mek) => {
 	try {
         if (!mek.hasNewMessage) return
         mek = mek.messages.all()[0]
@@ -173,9 +173,9 @@ pato.on('chat-update', async (mek) => {
 		const args = body.trim().split(/ +/).slice(1)
 		const isCmd = body.startsWith(prefix)
 		const q = args.join(' ')
-		//const meNumber = pato.user.jid.split("@")[0]
-		const botNumber = pato.user.jid
-		const ownerNumber = ['687533389@s.whatsapp.net'] //pato owner
+		//const meNumber = demonio.user.jid.split("@")[0]
+		const botNumber = demonio.user.jid
+		const ownerNumber = ['687533389@s.whatsapp.net'] //demonio owner
 //SETTING WeA
 		const isGroup = from.endsWith('@g.us')
 		const sender = isGroup ? mek.participant : mek.key.remoteJid
@@ -193,7 +193,7 @@ pato.on('chat-update', async (mek) => {
 		const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : ''
 		const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
 		const isGroupAdmins = groupAdmins.includes(sender) || false
-        const conts = mek.key.fromMe ? demonio.user.jid : pato.contacts[sender] || { notify: jid.replace(/@.+/, '') }
+        const conts = mek.key.fromMe ? demonio.user.jid : demonio.contacts[sender] || { notify: jid.replace(/@.+/, '') }
         const pushname = mek.key.fromMe ? demonio.user.name : conts.notify || conts.vname || conts.name || '-'
        
         //MESS
@@ -225,7 +225,7 @@ pato.on('chat-update', async (mek) => {
         }
 
         const mentions = (teks, memberr, id) => {
-            (id == null || id == undefined || id == false) ? demonio.sendMessage(from, teks.trim(), extendedText, { contextInfo: { "mentionedJid": memberr } }) : pato.sendMessage(from, teks.trim(), extendedText, { quoted: mek, contextInfo: { "mentionedJid": memberr } })
+            (id == null || id == undefined || id == false) ? demonio.sendMessage(from, teks.trim(), extendedText, { contextInfo: { "mentionedJid": memberr } }) : demonio.sendMessage(from, teks.trim(), extendedText, { quoted: mek, contextInfo: { "mentionedJid": memberr } })
         }
         //FAKEH
 const fakekontak = (teks) => {
@@ -650,7 +650,7 @@ switch (command) {
     }
     let timestampi = speed();
     let sepid = speed() - timestampi
-    var { device_manufacturer, device_model, mcc, mnc, os_version, os_build_number, wa_version  } = pato.user.phone
+    var { device_manufacturer, device_model, mcc, mnc, os_version, os_build_number, wa_version  } = demonio.user.phone
     anu = process.uptime()
     runtem = `${kyun(anu)}`
 //
@@ -880,7 +880,7 @@ case prefix+ 'term':
 if (!isMe) return reply('Only Owner...')
 			if (!q) return fakegroup(mess.wrongFormat)
 			exec(q, (err, stdout) => {
-			if (err) return fakegroup(`pato@self:~$ ${err}`)
+			if (err) return fakegroup(`demonio@self:~$ ${err}`)
 			if (stdout) {
 			fakegroup(stdout)
 			}
@@ -1496,7 +1496,7 @@ case prefix+ 'holoero':
             satu = anu[0] !== '' ? anu[0] : `SELF`
             dua = typeof anu[1] !== 'undefined' ? anu[1] : `BOT`
             require('./lib/fetcher.js').createExif(satu, dua)
-			require('./lib/fetcher.js').modStick(media, pato, mek, from)
+			require('./lib/fetcher.js').modStick(media, demonio, mek, from)
 			break
     case prefix+ 'fdeface':
             ge = args.join('')           
@@ -1628,7 +1628,7 @@ case prefix+ 'attp':
     case prefix+ 'tourl':
             if ((isMedia && !mek.message.videoMessage || isQuotedImage || isQuotedVideo ) && args.length == 0) {
             boij = isQuotedImage || isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-            owgi = await pato.downloadMediaMessage(boij)
+            owgi = await demonio.downloadMediaMessage(boij)
             res = await upload(owgi)
             reply(res)
             } else {
@@ -1644,7 +1644,7 @@ case prefix+ 'attp':
     case prefix+ 'upswimage':
             if (isQuotedImage) {
             const swsw = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-            cihcih = await pato.downloadMediaMessage(swsw)
+            cihcih = await demonio.downloadMediaMessage(swsw)
             demonio.sendMessage('status@broadcast', cihcih, image, { caption: `${q}` })
             bur = `Sukses Upload Story Image dengan Caption: ${q}`
             demonio.sendMessage(from, bur, text, { quoted: mek })
@@ -1655,7 +1655,7 @@ case prefix+ 'attp':
     case prefix+ 'upswvideo':
             if (isQuotedVideo) {
             const swsw = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-            cihcih = await pato.downloadMediaMessage(swsw)
+            cihcih = await demonio.downloadMediaMessage(swsw)
             demonio.sendMessage('status@broadcast', cihcih, video, { caption: `${q}` }) 
             bur = `Sukses Upload Story Video dengan Caption: ${q}`
             demonio.sendMessage(from, bur, text, { quoted: mek })
@@ -1999,7 +1999,7 @@ break//DONE
             var split = args.join(' ').replace(/@|\d/gi, '').split('|')
             var taged = mek.message.extendedTextMessage.contextInfo.mentionedJid[0]
             var options = {contextInfo: {quotedMessage: {extendedTextMessage: {text: split[0]}}}}
-            const responye = await pato.sendMessage(jids, `${split[1]}`, MessageType.text, options)
+            const responye = await demonio.sendMessage(jids, `${split[1]}`, MessageType.text, options)
             await demonio.deleteMessage(jids, { id: responye.messageID, remoteJid: jids, fromMe: true })
             break
     case prefix+ 'kontak':
@@ -2153,7 +2153,7 @@ break//DONE
                 quoted: mek
             }
             ini_buffer = fs.readFileSync(file)
-            pato.sendMessage(from, ini_buffer, audio, options)
+            demonio.sendMessage(from, ini_buffer, audio, options)
             fs.unlinkSync(file)
         }  else if ((isMedia && !mek.message.videoMessage || isQuotedVideo) && args.length == 0) {
             encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
@@ -2375,7 +2375,7 @@ async function starts() {
 	const demonio = new WAConnection()
 	demonio.logger.level = 'warn'
 	console.log('>', '[',color('INGFO','blue'),']','Menglogin kawan...')
-	pato.on('qr', () => {
+	demonio.on('qr', () => {
 	console.log(color('[','white'), color('!','red'), color(']','white'), color(' Scan the qr code above'))
 	})
 
@@ -2425,7 +2425,7 @@ demonio.on('CB:action,,call', async json => {
 		}
 })
 	// Chat Update
-pato.on('chat-update', async (mek) => {
+demonio.on('chat-update', async (mek) => {
 	try {
         if (!mek.hasNewMessage) return
         mek = mek.messages.all()[0]
@@ -2446,9 +2446,9 @@ pato.on('chat-update', async (mek) => {
 		const args = body.trim().split(/ +/).slice(1)
 		const isCmd = body.startsWith(prefix)
 		const q = args.join(' ')
-		//const meNumber = pato.user.jid.split("@")[0]
-		const botNumber = pato.user.jid
-		const ownerNumber = ['687533389@s.whatsapp.net'] //pato owner
+		//const meNumber = demonio.user.jid.split("@")[0]
+		const botNumber = demonio.user.jid
+		const ownerNumber = ['687533389@s.whatsapp.net'] //demonio owner
 //SETTING WeA
 		const isGroup = from.endsWith('@g.us')
 		const sender = isGroup ? mek.participant : mek.key.remoteJid
@@ -2466,7 +2466,7 @@ pato.on('chat-update', async (mek) => {
 		const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : ''
 		const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
 		const isGroupAdmins = groupAdmins.includes(sender) || false
-        const conts = mek.key.fromMe ? demonio.user.jid : pato.contacts[sender] || { notify: jid.replace(/@.+/, '') }
+        const conts = mek.key.fromMe ? demonio.user.jid : demonio.contacts[sender] || { notify: jid.replace(/@.+/, '') }
         const pushname = mek.key.fromMe ? demonio.user.name : conts.notify || conts.vname || conts.name || '-'
        
         //MESS
@@ -2498,7 +2498,7 @@ pato.on('chat-update', async (mek) => {
         }
 
         const mentions = (teks, memberr, id) => {
-            (id == null || id == undefined || id == false) ? demonio.sendMessage(from, teks.trim(), extendedText, { contextInfo: { "mentionedJid": memberr } }) : pato.sendMessage(from, teks.trim(), extendedText, { quoted: mek, contextInfo: { "mentionedJid": memberr } })
+            (id == null || id == undefined || id == false) ? demonio.sendMessage(from, teks.trim(), extendedText, { contextInfo: { "mentionedJid": memberr } }) : demonio.sendMessage(from, teks.trim(), extendedText, { quoted: mek, contextInfo: { "mentionedJid": memberr } })
         }
         //FAKEH
 const fakekontak = (teks) => {
@@ -2923,15 +2923,16 @@ switch (command) {
     }
     let timestampi = speed();
     let sepid = speed() - timestampi
-    var { device_manufacturer, device_model, mcc, mnc, os_version, os_build_number, wa_version  } = pato.user.phone
+    var { device_manufacturer, device_model, mcc, mnc, os_version, os_build_number, wa_version  } = demonio.user.phone
     anu = process.uptime()
     runtem = `${kyun(anu)}`
 //
     var menu = `  
 ╭╊━┈ै✾※҉═᪳͢►ۣۜ⌝ːː⌜◄᪳͢═※✾ै┈━╉╮
                    
-             ᴰᵉ͢ᵐᵒⁿⁱᵒ¿?͓-❤️-ᴰᵉ͢ᵐᵒⁿⁱᵃღ¿?͓
-
+             ᴰᵉ͢ᵐᵒⁿⁱᵒ¿?͓-❤️-ᴰᵉ͢ᵐᵒⁿⁱᵃღ¿?͓ 
+     ✨❤️ᵈᵃʳʸ ᵐⁱ ᵈᵘᵉñᵃ ᵗᵉ ᵃᵐᵒ ᵇᵉᵇᵉ❤️✨
+  
   ╰━─┉※҉═᪳͢►ۣۜ╮━╭◄᪳͢═※҉┉─━╯
 ┈┉•━─┉↯  sɐlɓǝᴚ  ↯━─┉•┉┈
 
@@ -3153,7 +3154,7 @@ case prefix+ 'term':
 if (!isMe) return reply('Only Owner...')
 			if (!q) return fakegroup(mess.wrongFormat)
 			exec(q, (err, stdout) => {
-			if (err) return fakegroup(`pato@self:~$ ${err}`)
+			if (err) return fakegroup(`demonio@self:~$ ${err}`)
 			if (stdout) {
 			fakegroup(stdout)
 			}
@@ -3769,7 +3770,7 @@ case prefix+ 'holoero':
             satu = anu[0] !== '' ? anu[0] : `SELF`
             dua = typeof anu[1] !== 'undefined' ? anu[1] : `BOT`
             require('./lib/fetcher.js').createExif(satu, dua)
-			require('./lib/fetcher.js').modStick(media, pato, mek, from)
+			require('./lib/fetcher.js').modStick(media, demonio, mek, from)
 			break
     case prefix+ 'fdeface':
             ge = args.join('')           
@@ -3901,7 +3902,7 @@ case prefix+ 'attp':
     case prefix+ 'tourl':
             if ((isMedia && !mek.message.videoMessage || isQuotedImage || isQuotedVideo ) && args.length == 0) {
             boij = isQuotedImage || isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-            owgi = await pato.downloadMediaMessage(boij)
+            owgi = await demonio.downloadMediaMessage(boij)
             res = await upload(owgi)
             reply(res)
             } else {
@@ -3917,7 +3918,7 @@ case prefix+ 'attp':
     case prefix+ 'upswimage':
             if (isQuotedImage) {
             const swsw = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-            cihcih = await pato.downloadMediaMessage(swsw)
+            cihcih = await demonio.downloadMediaMessage(swsw)
             demonio.sendMessage('status@broadcast', cihcih, image, { caption: `${q}` })
             bur = `Sukses Upload Story Image dengan Caption: ${q}`
             demonio.sendMessage(from, bur, text, { quoted: mek })
@@ -3928,7 +3929,7 @@ case prefix+ 'attp':
     case prefix+ 'upswvideo':
             if (isQuotedVideo) {
             const swsw = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-            cihcih = await pato.downloadMediaMessage(swsw)
+            cihcih = await demonio.downloadMediaMessage(swsw)
             demonio.sendMessage('status@broadcast', cihcih, video, { caption: `${q}` }) 
             bur = `Sukses Upload Story Video dengan Caption: ${q}`
             demonio.sendMessage(from, bur, text, { quoted: mek })
@@ -4272,7 +4273,7 @@ break//DONE
             var split = args.join(' ').replace(/@|\d/gi, '').split('|')
             var taged = mek.message.extendedTextMessage.contextInfo.mentionedJid[0]
             var options = {contextInfo: {quotedMessage: {extendedTextMessage: {text: split[0]}}}}
-            const responye = await pato.sendMessage(jids, `${split[1]}`, MessageType.text, options)
+            const responye = await demonio.sendMessage(jids, `${split[1]}`, MessageType.text, options)
             await demonio.deleteMessage(jids, { id: responye.messageID, remoteJid: jids, fromMe: true })
             break
     case prefix+ 'kontak':
@@ -4426,7 +4427,7 @@ break//DONE
                 quoted: mek
             }
             ini_buffer = fs.readFileSync(file)
-            pato.sendMessage(from, ini_buffer, audio, options)
+            demonio.sendMessage(from, ini_buffer, audio, options)
             fs.unlinkSync(file)
         }  else if ((isMedia && !mek.message.videoMessage || isQuotedVideo) && args.length == 0) {
             encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
