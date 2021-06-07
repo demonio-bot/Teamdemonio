@@ -3055,7 +3055,7 @@ https://chat.whatsapp.com/LEQWlwCY2fU2UYjcQv2Eb3
             waktu = Date.now()
             anuu = args.join(' ') ? args.join(' ') : '-'
             alasan = anuu
-            fakestatus(' ᴬᵖᵃᵍᵃᵈᵒ 🥺')
+            fakestatus(' ᴬᵖᵃᵍᵃᵈᵒ 👿')
             break
     case prefix+ 'status':
             fakestatus(`*STATUS*\n${offline ? '> OFFLINE' : '> ONLINE'}\n${banChats ? '> SELF-MODE' : '> PUBLIC-MODE'}`)
